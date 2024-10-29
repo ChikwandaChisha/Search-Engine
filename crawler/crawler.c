@@ -117,11 +117,10 @@ void parseArgs(const int argc, char* argv[], char** seedURL, char** pageDirector
 
 
 void crawl(char* seedURL, char* pageDirectory, const int maxDepth) {
-    // Create a hashtable to track seen URLs and a bag for URLs to crawl
-    hashtable_t* pagesSeen = hashtable_new(200);
+    // Create the hashtable and bag for tracking pages to crawl and seen pages
+    hashtable_t* pagesSeen = hashtable_new(200); // Track URLs we've seen
     bag_t* pagesToCrawl = bag_new();
 
-    // Check for successful data structure initialization
     if (pagesSeen == NULL || pagesToCrawl == NULL) {
         fprintf(stderr, "error: failed to initialize data structures\n");
         hashtable_delete(pagesSeen, delete_url);
@@ -129,7 +128,7 @@ void crawl(char* seedURL, char* pageDirectory, const int maxDepth) {
         exit(1);
     }
 
-    // Duplicate seedURL for use as the key in hashtable
+    // Duplicate seedURL for insertion into hashtable
     char* duplicateSeedURL = strdup(seedURL);
     if (duplicateSeedURL == NULL) {
         fprintf(stderr, "error: failed to duplicate seedURL\n");
@@ -138,10 +137,9 @@ void crawl(char* seedURL, char* pageDirectory, const int maxDepth) {
         exit(1);
     }
 
-    // Insert the duplicated seed URL into the hashtable to mark it as seen
-    hashtable_insert(pagesSeen, duplicateSeedURL, "");  // Use empty string as value
+    hashtable_insert(pagesSeen, duplicateSeedURL, "");  // Use empty string as the item
 
-    // Create a webpage structure for the seed URL, with depth 0
+    // Create initial webpage with seedURL and depth 0
     webpage_t* webpage = webpage_new(seedURL, 0, NULL);
     if (webpage == NULL) {
         fprintf(stderr, "error: failed to create webpage\n");
@@ -151,30 +149,30 @@ void crawl(char* seedURL, char* pageDirectory, const int maxDepth) {
         exit(1);
     }
 
-    // Add the seed webpage to the bag for processing
+    // Add seed webpage to the bag
     bag_insert(pagesToCrawl, webpage);
-    int docID = 1;  // Initialize document ID counter
+    int docID = 1;  // Counter for naming saved pages
     webpage_t* current;
 
-    // Process each webpage in the bag until there are no more URLs to crawl
+     // Extract and process pages from bag until empty
     while ((current = bag_extract(pagesToCrawl)) != NULL) {
-        // Fetch HTML content of the current page
+        // Try to fetch the webpage's contents
         if (webpage_fetch(current)) {
-            // Save the fetched page to the pageDirectory with a unique docID
+            // Save successful fetches to pageDirectory with unique ID
             pagedir_save(current, pageDirectory, docID++);
-
-            // If within maxDepth, scan the page for URLs to add to the crawl
+            
+            // If not at max depth, scan page for new URLs to crawl
             if (webpage_getDepth(current) < maxDepth) {
                 pageScan(current, pagesToCrawl, pagesSeen);
             }
         }
-        // Free the current webpage after processing
-        webpage_delete(current);
+        webpage_delete(current);  // Free webpage memory after processing
     }
 
-    // Clean up: delete the hashtable and bag
+    // Clean up: delete the hashtable, bag, and free duplicateSeedURL
     hashtable_delete(pagesSeen, delete_url);
     bag_delete(pagesToCrawl, NULL);
+    free(duplicateSeedURL);  // Free the duplicated seed URL now that we're done
 }
 
 
@@ -218,6 +216,6 @@ void pageScan(webpage_t* page, bag_t* pagesToCrawl, hashtable_t* pagesSeen) {
  */
 void delete_url(void* item) {
     if (item != NULL && item != "" && strcmp(item, "") != 0) { // Only free if not the empty string
-        free(item);  
+        free(item);  // Ensure item is dynamically allocated before freeing
     }
 }
