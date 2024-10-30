@@ -58,6 +58,6 @@ bool pagedir_save(const webpage_t* page, const char* pageDirectory, const int do
     fprintf(file, "%d\n", webpage_getDepth(page));
     fprintf(file, "%s\n", webpage_getHTML(page));
 
-    fclose(file);
+    fclose(file); // Close the file
     return true;
 }
