@@ -8,16 +8,6 @@
  * The program fetches each page, extracts URLs, and continues crawling
  * new pages until the maximum depth is reached or all pages are visited.
  *
- * Usage:
- *   ./crawler seedURL pageDirectory maxDepth
- *     seedURL       - The URL from where crawling begins
- *     pageDirectory - The directory where pages are saved
- *     maxDepth      - The maximum depth to crawl (0-10)
- *
- * Dependencies:
- *   Requires libcs50 for data structures such as hashtable and bag.
- *   Requires page-specific modules like webpage and pagedir.
- *
  * Author: Chikwanda Chisha
  * Date: 20 October, 2024. (Fall)
  */

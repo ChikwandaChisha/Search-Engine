@@ -1,0 +1,11 @@
+# Object files
+*.o
+
+# Compiled executable
+crawler
+
+# Testing output
+testing.out
+
+# Data files generated during testing
+../data/*
