@@ -1,0 +1,23 @@
+
+==== Test Case: Missing arguments ====
+Pass
+Pass
+
+==== Test Case: Too many arguments ====
+Pass
+
+==== Test Case: Invalid page directory ====
+Pass
+
+==== Test Case: Valid run with correct arguments ====
+Error: Invalid page directory
+Error: Index file was not created.
+
+==== Test Case: Index integrity check with indextest ====
+Error: Index integrity test failed.
+Index integrity test failed: files differ.
+
+==== Test Case: Invalid index file (read-only directory) ====
+Pass
+
+==== Testing Completed ====
