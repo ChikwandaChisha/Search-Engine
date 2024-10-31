@@ -5,19 +5,6 @@
  * (produced by the TSE crawler) and saves it to an output file. The index maps words
  * to document IDs and occurrence counts, which is later used by a search engine querier.
  *
- * Usage:
- *   ./indexer pageDirectory indexFilename
- *
- * Arguments:
- * - pageDirectory: Directory path containing crawler-generated webpage files.
- * - indexFilename: File path to save the index.
- *
- * Dependencies:
- * - index.h: Functions for managing the in-memory index structure.
- * - pagedir.h: Functions to validate and load webpages from pageDirectory.
- * - word.h: Function to normalize words.
- * - file.h: Utility functions to read lines and entire files.
- *
  * Exit Status:
  * - 0 on success, non-zero on error with appropriate error messages to stderr.
  *
