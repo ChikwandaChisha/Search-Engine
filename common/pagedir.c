@@ -118,10 +118,7 @@ webpage_t *pagedir_load(const char *filepath) {
     // Create a new webpage with the URL, depth, and HTML content
     webpage_t *page = webpage_new(url, depth, html);
 
-    // Free the URL and HTML as webpage_new should have copied them
-    free(url);
-    free(html);
-
+    // Do not free `url` and `html` here, as `webpage_new` does not copy them
     // Return the created webpage structure
     return page;
 }
