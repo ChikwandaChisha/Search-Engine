@@ -1,0 +1,16 @@
+indexer/
+├── Makefile
+├── indexer.c
+├── indextest.c
+├── IMPLEMENTATION.md
+├── README.md
+├── testing.sh
+└── testing.out
+common/
+├── Makefile
+├── index.c
+├── index.h
+├── pagedir.c
+├── pagedir.h
+├── word.c
+└── word.h
