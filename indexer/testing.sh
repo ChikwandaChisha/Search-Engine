@@ -57,10 +57,11 @@ else
     echo "Index integrity test failed: files differ."
 fi
 
-# Test 6: Invalid index file (read-only directory example)
+# Test 6: Invalid index file (read-only directory)
 print_test_case "Invalid index file (read-only directory)"
 mkdir -p readonly_dir && chmod 555 readonly_dir
-./indexer $PAGE_DIR readonly_dir/test_index 2>&1 | grep -q "Error: Invalid page directory" && echo "Pass" || echo "Fail"
+# We expect "Error: Could not save index to file"
+./indexer $PAGE_DIR readonly_dir/test_index 2>&1 | grep -q "Error: Could not save index to file" && echo "Pass" || echo "Fail"
 chmod 755 readonly_dir && rm -rf readonly_dir
 
 # Final message
