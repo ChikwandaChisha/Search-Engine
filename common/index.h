@@ -1,13 +1,6 @@
 /**
  * index.h - header file for the index module for Tiny Search Engine
  *
- * This module provides an interface for creating, managing, saving, loading,
- * and deleting an in-memory inverted index structure, which maps words to 
- * their document occurrences.
- *
- * The index structure is implemented as a hashtable, where each entry maps
- * a word to a counter that tracks occurrences of the word across documents.
- *
  * Author: Chikwanda Chisha
  * Date: 29 October, 2024.
  */
@@ -18,13 +11,16 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "../libcs50/counters.h"
+#include "../libcs50/hashtable.h"
 
 /**
  * Index structure, representing an in-memory inverted index.
  * Maps words to a list of (docID, count) pairs where `count` represents the 
  * number of times the word appears in the document with the specified docID.
  */
-typedef struct index index_t;
+typedef struct index {
+    hashtable_t *table;  // Hashtable that maps words to counters
+} index_t;
 
 /**
  * Creates a new index.
@@ -94,5 +90,16 @@ index_t *index_load(const char *filename);
  *   index - pointer to the index to delete
  */
 void index_delete(index_t *index);
+
+/**
+ * Returns the hashtable contained in the index.
+ * 
+ * Parameters:
+ *   index - pointer to the index
+ * 
+ * Returns:
+ *   pointer to the hashtable, or NULL if index is NULL
+ */
+hashtable_t *index_get_hashtable(const index_t *index);
 
 #endif // INDEX_H
