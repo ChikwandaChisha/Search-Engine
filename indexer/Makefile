@@ -1,63 +1,39 @@
-# Chikwanda Chisha
-# 30 October, 2024.
+# Makefile for 'indexer' module
+#
+# Chikwanda Chisha, October 30, 2024
 
-# Compiler settings
+LIBS = ../libcs50/libcs50-given.a
+LLIBS = ../libcs50/file.o ../libcs50/libcs50-given.a
+
+# uncomment the following to turn on verbose memory logging
+#TESTING=-DMEMTEST
+
+CFLAGS = -Wall -pedantic -std=c11 -ggdb -I../libcs50 -I../common $(TESTING)
 CC = gcc
-CFLAGS = -Wall -pedantic -std=c11 -ggdb -I../libcs50 -I../common
+MAKE = make
 
-# Object files for indexer and indextest
-INDEXER_OBJS = indexer.o ../common/pagedir.o ../common/index.o ../common/word.o ../libcs50/file.o ../libcs50/libcs50-given.a
-INDEXTEST_OBJS = indextest.o ../common/index.o ../libcs50/file.o ../libcs50/libcs50-given.a
-
-# Valgrind settings for memory leak checking
+# for memory-leak tests
 VALGRIND = valgrind --leak-check=full --show-leak-kinds=all
 
-.PHONY: all clean
+OBJS = indexer.o ../common/pagedir.o ../common/index.o ../common/word.o ../libcs50/file.o
+TOBJS = indextest.o ../common/index.o ../common/pagedir.o ../common/word.o ../libcs50/file.o
 
-# Default target builds both indexer and indextest
+.PHONY: all clean test valgrind
+
 all: indexer indextest
 
-# Compile indexer executable
-indexer: $(INDEXER_OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+indexer: $(OBJS) $(LIBS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o indexer
 
-# Compile indextest executable
-indextest: $(INDEXTEST_OBJS)
-	$(CC) $(CFLAGS) $^ -o $@
+indextest: $(TOBJS) $(LIBS)
+	$(CC) $(CFLAGS) $(TOBJS) $(LIBS) -o indextest
 
-# Compile indexer.o
-indexer.o: indexer.c ../common/pagedir.h ../common/index.h ../common/word.h ../libcs50/file.h
-	$(CC) $(CFLAGS) -c indexer.c
-
-# Compile indextest.o
-indextest.o: indextest.c ../common/index.h ../libcs50/file.h
-	$(CC) $(CFLAGS) -c indextest.c
-
-# Compile other required object files in common directory with -z noexecstack
-../common/pagedir.o: ../common/pagedir.c ../common/pagedir.h
-	$(CC) $(CFLAGS) -z noexecstack -c ../common/pagedir.c -o $@
-
-../common/index.o: ../common/index.c ../common/index.h
-	$(CC) $(CFLAGS) -z noexecstack -c ../common/index.c -o $@
-
-../common/word.o: ../common/word.c ../common/word.h
-	$(CC) $(CFLAGS) -z noexecstack -c ../common/word.c -o $@
-
-../libcs50/file.o: ../libcs50/file.c ../libcs50/file.h
-	$(CC) $(CFLAGS) -z noexecstack -c ../libcs50/file.c -o $@
-
-# Run tests
 test: indexer indextest testing.sh
-	bash -v testing.sh > testing.out
+	bash -v testing.sh
 
-# Valgrind for memory leak checks
-valgrind: indexer indextest
-	$(VALGRIND) ./indexer ~/cs50-dev/shared/tse/output/toscrape-1 ../data/toscrape.index
-	$(VALGRIND) ./indextest ../data/toscrape.index ../data/toscrape.index_copy
-
-# Clean up compiled files
 clean:
-	rm -f *~ *.o *.dSYM
+	rm -rf *.dSYM  # MacOS debugger info
+	rm -f *~ *.o
 	rm -f indexer
 	rm -f indextest
-	rm -f testing.out
+	rm -f core
