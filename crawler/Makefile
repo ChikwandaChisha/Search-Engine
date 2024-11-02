@@ -2,34 +2,38 @@
 # Chikwanda Chisha
 # October 25, 2024
 
-# Compiler
-CC = gcc
-CFLAGS = -Wall -pedantic -std=c11 -ggdb -I../libcs50 -I../common
-LIBS = ../libcs50/libcs50.a ../common/common.a
 
-# Executable
-EXE = crawler
-
-# Files
 OBJS = crawler.o
-TEST_SCRIPT = testing.sh
+LIBS = ../common/common.a ../libcs50/libcs50.a
 
-# Default target
-$(EXE): $(OBJS) $(LIBS)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o $(EXE)
+# compiler options
+CFLAGS = -Wall -pedantic -std=c11 -ggdb
+INCLUDES = -I../libcs50 -I../common
+CC = gcc
+MAKE = make
 
-# Compile .c files to .o files
-crawler.o: crawler.c ../common/pagedir.h
+.PHONY: all clean test
 
-# Clean up
+all: crawler
+
+# crawler source dependencies
+crawler.o: crawler.h crawler.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c crawler.c
+
+# crawler binary dependencies
+crawler: $(OBJS) $(LIBS)
+	$(CC) $(CFLAGS) $(OBJS) $(LIBS) -o crawler
+
+# Build the libraries
+$(LIBS):
+	$(MAKE) -C ../common
+	$(MAKE) -C ../libcs50
+
+test: crawler testing.sh
+	bash -v testing.sh &> testing.out
+
 clean:
-	rm -f $(OBJS) $(EXE) *.out
-	rm -rf ../data/*
-
-# Test target
-test: $(EXE)
-	./$(TEST_SCRIPT)
-
-# Run Valgrind memory check
-valgrind:
-	valgrind --leak-check=full ./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../data 1
+	rm -rf *.dSYM  # MacOS debugger info
+	rm -f *~ *.o
+	rm -f crawler
+	rm -f core
