@@ -59,142 +59,11 @@ echo "Testing basic queries..."
 Testing basic queries...
 echo "computer" | ./querier $TESTDIR $INDEXFILE
 Query: computer
-Added docID: 380 with score: 7
-Added docID: 166 with score: 2
 Matches in rank order:
 score:   7 doc: 380: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/algorithms-to-live-by-the-computer-science-of-human-decisions_880/index.html
 score:   2 doc: 166: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-stand_282/index.html
 echo "science" | ./querier $TESTDIR $INDEXFILE
 Query: science
-Added docID: 585 with score: 2
-Added docID: 584 with score: 3
-Added docID: 583 with score: 1
-Added docID: 582 with score: 1
-Added docID: 581 with score: 1
-Added docID: 580 with score: 1
-Added docID: 573 with score: 2
-Added docID: 554 with score: 2
-Added docID: 553 with score: 2
-Added docID: 533 with score: 2
-Added docID: 532 with score: 2
-Added docID: 524 with score: 2
-Added docID: 512 with score: 2
-Added docID: 511 with score: 2
-Added docID: 491 with score: 2
-Added docID: 480 with score: 2
-Added docID: 461 with score: 2
-Added docID: 460 with score: 2
-Added docID: 442 with score: 2
-Added docID: 422 with score: 2
-Added docID: 421 with score: 2
-Added docID: 402 with score: 2
-Added docID: 401 with score: 2
-Added docID: 400 with score: 1
-Added docID: 393 with score: 2
-Added docID: 380 with score: 4
-Added docID: 377 with score: 1
-Added docID: 374 with score: 2
-Added docID: 373 with score: 2
-Added docID: 368 with score: 3
-Added docID: 362 with score: 2
-Added docID: 349 with score: 3
-Added docID: 348 with score: 2
-Added docID: 347 with score: 2
-Added docID: 346 with score: 1
-Added docID: 345 with score: 1
-Added docID: 344 with score: 1
-Added docID: 343 with score: 2
-Added docID: 342 with score: 1
-Added docID: 341 with score: 3
-Added docID: 340 with score: 3
-Added docID: 339 with score: 1
-Added docID: 338 with score: 1
-Added docID: 337 with score: 1
-Added docID: 336 with score: 1
-Added docID: 335 with score: 1
-Added docID: 334 with score: 1
-Added docID: 333 with score: 3
-Added docID: 332 with score: 1
-Added docID: 331 with score: 6
-Added docID: 325 with score: 2
-Added docID: 318 with score: 2
-Added docID: 309 with score: 4
-Added docID: 304 with score: 2
-Added docID: 303 with score: 2
-Added docID: 282 with score: 2
-Added docID: 281 with score: 2
-Added docID: 274 with score: 2
-Added docID: 255 with score: 2
-Added docID: 254 with score: 2
-Added docID: 253 with score: 1
-Added docID: 252 with score: 2
-Added docID: 251 with score: 6
-Added docID: 250 with score: 1
-Added docID: 249 with score: 1
-Added docID: 248 with score: 6
-Added docID: 247 with score: 3
-Added docID: 246 with score: 2
-Added docID: 245 with score: 4
-Added docID: 244 with score: 1
-Added docID: 243 with score: 5
-Added docID: 242 with score: 1
-Added docID: 241 with score: 1
-Added docID: 240 with score: 1
-Added docID: 239 with score: 5
-Added docID: 224 with score: 2
-Added docID: 222 with score: 2
-Added docID: 221 with score: 2
-Added docID: 214 with score: 2
-Added docID: 206 with score: 2
-Added docID: 203 with score: 2
-Added docID: 196 with score: 2
-Added docID: 194 with score: 2
-Added docID: 192 with score: 2
-Added docID: 181 with score: 2
-Added docID: 163 with score: 2
-Added docID: 161 with score: 4
-Added docID: 156 with score: 2
-Added docID: 153 with score: 1
-Added docID: 148 with score: 1
-Added docID: 146 with score: 1
-Added docID: 145 with score: 2
-Added docID: 140 with score: 1
-Added docID: 125 with score: 2
-Added docID: 124 with score: 2
-Added docID: 117 with score: 2
-Added docID: 111 with score: 1
-Added docID: 105 with score: 2
-Added docID: 99 with score: 2
-Added docID: 90 with score: 2
-Added docID: 86 with score: 2
-Added docID: 80 with score: 2
-Added docID: 78 with score: 2
-Added docID: 72 with score: 2
-Added docID: 69 with score: 2
-Added docID: 65 with score: 2
-Added docID: 63 with score: 2
-Added docID: 61 with score: 2
-Added docID: 59 with score: 2
-Added docID: 55 with score: 6
-Added docID: 54 with score: 3
-Added docID: 53 with score: 1
-Added docID: 52 with score: 1
-Added docID: 51 with score: 2
-Added docID: 50 with score: 1
-Added docID: 49 with score: 2
-Added docID: 48 with score: 1
-Added docID: 47 with score: 2
-Added docID: 46 with score: 1
-Added docID: 45 with score: 2
-Added docID: 40 with score: 1
-Added docID: 27 with score: 9
-Added docID: 26 with score: 1
-Added docID: 25 with score: 1
-Added docID: 22 with score: 1
-Added docID: 4 with score: 3
-Added docID: 3 with score: 2
-Added docID: 2 with score: 2
-Added docID: 1 with score: 3
 Matches in rank order:
 score:   9 doc:  27: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/mesaerion-the-best-science-fiction-stories-1800-1849_983/index.html
 score:   6 doc: 331: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/science-fiction_16/index.html
@@ -334,22 +203,16 @@ echo "Testing AND queries..."
 Testing AND queries...
 echo "computer science" | ./querier $TESTDIR $INDEXFILE
 Query: computer science
-Added docID: 380 with score: 7
-Added docID: 166 with score: 2
 Matches in rank order:
 score:   7 doc: 380: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/algorithms-to-live-by-the-computer-science-of-human-decisions_880/index.html
 score:   2 doc: 166: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-stand_282/index.html
 echo "computer AND science" | ./querier $TESTDIR $INDEXFILE
 Query: computer and science
-Added docID: 380 with score: 7
-Added docID: 166 with score: 2
 Matches in rank order:
 score:   7 doc: 380: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/algorithms-to-live-by-the-computer-science-of-human-decisions_880/index.html
 score:   2 doc: 166: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-stand_282/index.html
 echo "computer and programming" | ./querier $TESTDIR $INDEXFILE
 Query: computer and programming
-Added docID: 380 with score: 7
-Added docID: 166 with score: 2
 Matches in rank order:
 score:   7 doc: 380: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/algorithms-to-live-by-the-computer-science-of-human-decisions_880/index.html
 score:   2 doc: 166: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-stand_282/index.html
@@ -359,135 +222,6 @@ echo "Testing OR queries..."
 Testing OR queries...
 echo "computer OR science" | ./querier $TESTDIR $INDEXFILE
 Query: computer or science
-Added docID: 585 with score: 2
-Added docID: 584 with score: 3
-Added docID: 583 with score: 1
-Added docID: 582 with score: 1
-Added docID: 581 with score: 1
-Added docID: 580 with score: 1
-Added docID: 573 with score: 2
-Added docID: 554 with score: 2
-Added docID: 553 with score: 2
-Added docID: 533 with score: 2
-Added docID: 532 with score: 2
-Added docID: 524 with score: 2
-Added docID: 512 with score: 2
-Added docID: 511 with score: 2
-Added docID: 491 with score: 2
-Added docID: 480 with score: 2
-Added docID: 461 with score: 2
-Added docID: 460 with score: 2
-Added docID: 442 with score: 2
-Added docID: 422 with score: 2
-Added docID: 421 with score: 2
-Added docID: 402 with score: 2
-Added docID: 401 with score: 2
-Added docID: 400 with score: 1
-Added docID: 393 with score: 2
-Added docID: 380 with score: 4
-Added docID: 377 with score: 1
-Added docID: 374 with score: 2
-Added docID: 373 with score: 2
-Added docID: 368 with score: 3
-Added docID: 362 with score: 2
-Added docID: 349 with score: 3
-Added docID: 348 with score: 2
-Added docID: 347 with score: 2
-Added docID: 346 with score: 1
-Added docID: 345 with score: 1
-Added docID: 344 with score: 1
-Added docID: 343 with score: 2
-Added docID: 342 with score: 1
-Added docID: 341 with score: 3
-Added docID: 340 with score: 3
-Added docID: 339 with score: 1
-Added docID: 338 with score: 1
-Added docID: 337 with score: 1
-Added docID: 336 with score: 1
-Added docID: 335 with score: 1
-Added docID: 334 with score: 1
-Added docID: 333 with score: 3
-Added docID: 332 with score: 1
-Added docID: 331 with score: 6
-Added docID: 325 with score: 2
-Added docID: 318 with score: 2
-Added docID: 309 with score: 4
-Added docID: 304 with score: 2
-Added docID: 303 with score: 2
-Added docID: 282 with score: 2
-Added docID: 281 with score: 2
-Added docID: 274 with score: 2
-Added docID: 255 with score: 2
-Added docID: 254 with score: 2
-Added docID: 253 with score: 1
-Added docID: 252 with score: 2
-Added docID: 251 with score: 6
-Added docID: 250 with score: 1
-Added docID: 249 with score: 1
-Added docID: 248 with score: 6
-Added docID: 247 with score: 3
-Added docID: 246 with score: 2
-Added docID: 245 with score: 4
-Added docID: 244 with score: 1
-Added docID: 243 with score: 5
-Added docID: 242 with score: 1
-Added docID: 241 with score: 1
-Added docID: 240 with score: 1
-Added docID: 239 with score: 5
-Added docID: 224 with score: 2
-Added docID: 222 with score: 2
-Added docID: 221 with score: 2
-Added docID: 214 with score: 2
-Added docID: 206 with score: 2
-Added docID: 203 with score: 2
-Added docID: 196 with score: 2
-Added docID: 194 with score: 2
-Added docID: 192 with score: 2
-Added docID: 181 with score: 2
-Added docID: 163 with score: 2
-Added docID: 161 with score: 4
-Added docID: 156 with score: 2
-Added docID: 153 with score: 1
-Added docID: 148 with score: 1
-Added docID: 146 with score: 1
-Added docID: 145 with score: 2
-Added docID: 140 with score: 1
-Added docID: 125 with score: 2
-Added docID: 124 with score: 2
-Added docID: 117 with score: 2
-Added docID: 111 with score: 1
-Added docID: 105 with score: 2
-Added docID: 99 with score: 2
-Added docID: 90 with score: 2
-Added docID: 86 with score: 2
-Added docID: 80 with score: 2
-Added docID: 78 with score: 2
-Added docID: 72 with score: 2
-Added docID: 69 with score: 2
-Added docID: 65 with score: 2
-Added docID: 63 with score: 2
-Added docID: 61 with score: 2
-Added docID: 59 with score: 2
-Added docID: 55 with score: 6
-Added docID: 54 with score: 3
-Added docID: 53 with score: 1
-Added docID: 52 with score: 1
-Added docID: 51 with score: 2
-Added docID: 50 with score: 1
-Added docID: 49 with score: 2
-Added docID: 48 with score: 1
-Added docID: 47 with score: 2
-Added docID: 46 with score: 1
-Added docID: 45 with score: 2
-Added docID: 40 with score: 1
-Added docID: 27 with score: 9
-Added docID: 26 with score: 1
-Added docID: 25 with score: 1
-Added docID: 22 with score: 1
-Added docID: 4 with score: 3
-Added docID: 3 with score: 2
-Added docID: 2 with score: 2
-Added docID: 1 with score: 3
 Matches in rank order:
 score:   9 doc:  27: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/mesaerion-the-best-science-fiction-stories-1800-1849_983/index.html
 score:   6 doc: 331: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/category/books/science-fiction_16/index.html
@@ -620,9 +354,6 @@ score:   1 doc: 148: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/amer
 score:   1 doc: 146: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/house-of-lost-worlds-dinosaurs-dynasties-and-the-story-of-life-on-earth_170/index.html
 echo "programming OR engineering" | ./querier $TESTDIR $INDEXFILE
 Query: programming or engineering
-Added docID: 382 with score: 1
-Added docID: 156 with score: 1
-Added docID: 155 with score: 1
 Matches in rank order:
 score:   1 doc: 382: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/everydata-the-misinformation-hidden-in-the-little-data-you-consume-every-day_891/index.html
 score:   1 doc: 156: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/1491-new-revelations-of-the-americas-before-columbus_650/index.html
@@ -633,11 +364,6 @@ echo "Testing complex queries..."
 Testing complex queries...
 echo "computer AND science OR engineering" | ./querier $TESTDIR $INDEXFILE
 Query: computer and science or engineering
-Added docID: 382 with score: 1
-Added docID: 156 with score: 1
-Added docID: 155 with score: 1
-Added docID: 380 with score: 7
-Added docID: 166 with score: 2
 Matches in rank order:
 score:   7 doc: 380: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/algorithms-to-live-by-the-computer-science-of-human-decisions_880/index.html
 score:   2 doc: 166: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-stand_282/index.html
@@ -646,8 +372,6 @@ score:   1 doc: 382: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/ever
 score:   1 doc: 156: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/1491-new-revelations-of-the-americas-before-columbus_650/index.html
 echo "computer science AND programming OR software" | ./querier $TESTDIR $INDEXFILE
 Query: computer science and programming or software
-Added docID: 380 with score: 7
-Added docID: 166 with score: 2
 Matches in rank order:
 score:   7 doc: 380: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/algorithms-to-live-by-the-computer-science-of-human-decisions_880/index.html
 score:   2 doc: 166: http://cs50tse.cs.dartmouth.edu/tse/toscrape/catalogue/the-stand_282/index.html
