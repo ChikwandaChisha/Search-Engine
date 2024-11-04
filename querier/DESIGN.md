@@ -1,5 +1,8 @@
 # DESIGN.md - Querier Design
 
+*Author: Chikwanda Chisha *
+*Date: 30 October, 2024 *
+
 ## Purpose
 The querier is responsible for reading queries from `stdin`, parsing them, and retrieving relevant documents from the inverted index produced by the indexer. Queries support basic boolean operations (`and`, `or`) with precedence for `and`.
 
@@ -25,5 +28,3 @@ The querier is responsible for reading queries from `stdin`, parsing them, and r
 ## Scoring
 - Each document receives a score based on term frequency, summed for `or` terms and minimized for `and` terms.
 
-*Author: Chikwanda Chisha*
-*Date: 30 October, 2024*
