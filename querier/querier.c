@@ -35,6 +35,11 @@ typedef struct fill_array_args {
     int array_size;         // Maximum capacity of the scores array
 } fill_array_args_t;
 
+struct intersect_helper_args {
+    counters_t *c2;
+    counters_t *result;
+};
+
 
 // Function prototypes
 void process_query(char *query, index_t *index, const char *pageDirectory);
@@ -51,6 +56,7 @@ static void intersect_counters(counters_t *c1, counters_t *c2);
 static void intersect_helper(void *arg, const int key, const int count);
 static void union_counters(counters_t *c1, counters_t *c2);
 static void union_helper(void *arg, const int key, const int count);
+
 
 
 
@@ -150,24 +156,25 @@ char *clean_input(const char *query) {
     int j = 0;
     bool lastWasSpace = true;  // Track if last char was space
     
-    // Process each character
+    // Process each character until end of string or newline
     for (int i = 0; query[i] != '\0' && query[i] != '\n'; i++) {
         if (isalpha(query[i])) {
+            // Convert letters to lowercase and add to cleaned string
             cleaned[j++] = tolower(query[i]);
             lastWasSpace = false;
         }
         else if (isspace(query[i])) {
-            // Add only one space between words
+            // Normalize spaces: only one space between words
             if (!lastWasSpace) {
                 cleaned[j++] = ' ';
                 lastWasSpace = true;
             }
         }
         else {
-            // Invalid character found
+            // Reject queries with non-letter, non-space characters
             fprintf(stderr, "Error: bad character '%c' in query.\n", query[i]);
-            free(cleaned);
-            return NULL;
+            free(cleaned);              // Free allocated memory
+            return NULL;                // Return NULL to indicate error
         }
     }
     
@@ -199,19 +206,22 @@ char **tokenize(char *query) {
     // Split string into tokens
     int i = 0;
     char *token = strtok(query, " ");
+
+    // Process tokens until end of string
     while (token != NULL) {
+        // Allocate memory for copy of current token
         tokens[i] = malloc(strlen(token) + 1);
         if (tokens[i] == NULL) {
-            // Clean up on error
+            // If malloc fails, free all previously allocated tokens
             for (int j = 0; j < i; j++) {
                 free(tokens[j]);
             }
-            free(tokens);
-            return NULL;
+            free(tokens);   // Free the array itself
+            return NULL;    // Return NULL to indicate tokenization failed
         }
-        strcpy(tokens[i], token);
-        i++;
-        token = strtok(NULL, " ");
+        strcpy(tokens[i], token);          // Copy token into array
+        i++;                               // Move to next position
+        token = strtok(NULL, " ");         // Get next token
     }
     tokens[i] = NULL;  // NULL terminate array
     
@@ -262,80 +272,73 @@ static bool validate_query_syntax(char **tokens) {
 }
 
 /*
- * evaluate_query - Processes tokens and evaluates the query.
+ * Processes tokens and evaluates the query.
  */
 counters_t *evaluate_query(char **tokens, index_t *index) {
     if (tokens == NULL || tokens[0] == NULL || index == NULL) return NULL;
 
-    // Retrieve the hashtable from the index for fast word lookups
     hashtable_t *ht = index_get_hashtable(index);
     if (ht == NULL) return NULL;
 
-    // Initialize the final results counters to store document scores
-    counters_t *result = counters_new();
-    if (result == NULL) return NULL;
+    counters_t *final_result = NULL;  // Holds the final result
+    counters_t *current_and = NULL;   // Holds current AND sequence
+    bool start_sequence = true;       // Flag for start of AND sequence
 
-    counters_t *current_and = NULL;  // Temporary counter for AND sequences
-    bool is_first = true;  // Flag for first word in an AND sequence
-
-    // Iterate through each token in the query
     for (int i = 0; tokens[i] != NULL; i++) {
+        // Skip operator tokens
         if (strcmp(tokens[i], "or") == 0) {
-            // 'or' signifies the end of an AND sequence
-            is_first = true;
+            // Union the completed AND sequence into the final result
+            if (current_and != NULL) {
+                if (final_result == NULL) {
+                    final_result = current_and;
+                } else {
+                    union_counters(final_result, current_and);
+                    counters_delete(current_and);
+                }
+                current_and = NULL;  // Reset for next AND sequence
+            }
+            start_sequence = true;  // Ready for a new AND sequence
             continue;
         }
 
-        if (strcmp(tokens[i], "and") == 0) continue;  // Ignore 'and' tokens
-
-        // Get counters for the current word from the hashtable
+        // Get counters for current word
         counters_t *word_counters = hashtable_find(ht, tokens[i]);
 
-        if (is_first) {
-            // First word in the AND sequence initializes current_and counters
+        if (start_sequence) {
+            // Initialize current AND sequence with this word's counters
             current_and = counters_new();
-            if (current_and != NULL && word_counters != NULL) {
-                // Copy word counters to current_and if they exist
+            if (word_counters != NULL) {
                 counters_iterate(word_counters, current_and, union_helper);
             }
-            is_first = false;  // Reset first word flag
-        } else if (tokens[i+1] != NULL && strcmp(tokens[i+1], "or") != 0) {
-            // Further AND words: intersect current_and with word counters
+            start_sequence = false;  // Mark that sequence has started
+        } else {
+            // Intersect with the current word's counters for AND logic
             if (word_counters != NULL) {
                 intersect_counters(current_and, word_counters);
             } else {
-                // Word not found: reset current_and to an empty set
+                // If word not found, set current AND result to empty
                 counters_delete(current_and);
-                current_and = counters_new();
+                current_and = counters_new();  // Empty result
             }
-        } else {
-            // Last word in the AND sequence, perform union with result
-            if (word_counters != NULL) {
-                intersect_counters(current_and, word_counters);
-            }
-            union_counters(result, current_and);  // Union into final result
-            counters_delete(current_and);  // Free temporary AND sequence counters
-            current_and = NULL;  // Reset current_and for the next sequence
-            is_first = true;  // Reset first word flag for next sequence
         }
     }
 
-    // Ensure any remaining AND sequence is unioned into the result
+    // Process any remaining AND sequence at end of query
     if (current_and != NULL) {
-        union_counters(result, current_and);
-        counters_delete(current_and);  // Free the last AND sequence
+        if (final_result == NULL) {
+            final_result = current_and;      // First result becomes final result
+        } else {
+            union_counters(final_result, current_and);  // Merge with OR
+            counters_delete(current_and);    // Free temporary AND sequence
+        }
     }
 
-    return result;  // Return final document scores
+    return final_result != NULL ? final_result : counters_new();
 }
 
 
-/*
- * print_results - Prints the ranked query results.
- */
-#include <stdlib.h> // Add this for qsort if not already included
 
-// Comparator function for qsort to sort by score in descending order
+/* Comparator function for qsort to sort by score in descending order */ 
 int compare_scores(const void *a, const void *b) {
     doc_score_t *scoreA = (doc_score_t *)a;
     doc_score_t *scoreB = (doc_score_t *)b;
@@ -348,7 +351,7 @@ int compare_scores(const void *a, const void *b) {
 void print_results(counters_t *results, const char *pageDirectory) {
     if (results == NULL || pageDirectory == NULL) return;
 
-    // Step 1: Count number of non-zero results
+    // Count number of non-zero results
     int num_results = 0;
     counters_iterate(results, &num_results, count_nonzero);
 
@@ -357,27 +360,30 @@ void print_results(counters_t *results, const char *pageDirectory) {
         return;
     }
 
-    // Step 2: Allocate memory for an array of doc_score_t to hold the scores
+    // Allocate memory for an array of doc_score_t to hold the scores
     doc_score_t *scores = calloc(num_results, sizeof(doc_score_t));
     if (scores == NULL) {
         fprintf(stderr, "Error: Memory allocation failed in print_results.\n");
         return;
     }
 
-    // Step 3: Initialize the fill_array arguments
+    // Initialize the fill_array arguments
     fill_array_args_t args = { .scores = scores, .current_index = 0, .array_size = num_results };
 
-    // Step 4: Populate the array using counters_iterate with fill_array
+    // Populate the array using counters_iterate with fill_array
     counters_iterate(results, &args, fill_array);
 
-    // Step 5: Sort scores in descending order (same as in the previous version)
+    // Sort scores in descending order (same as in the previous version)
+    // Sort scores array in descending order using selection sort
     for (int i = 0; i < args.current_index - 1; i++) {
-        int max = i;
+        int max = i;                    // Index of maximum score found so far
+        // Find maximum score in unsorted portion
         for (int j = i + 1; j < args.current_index; j++) {
             if (scores[j].score > scores[max].score) {
                 max = j;
             }
         }
+        // Swap current position with maximum if needed
         if (max != i) {
             doc_score_t temp = scores[i];
             scores[i] = scores[max];
@@ -385,18 +391,19 @@ void print_results(counters_t *results, const char *pageDirectory) {
         }
     }
 
-    // Step 6: Print the results in rank order
+    // Print ranked results
     printf("Matches in rank order:\n");
     for (int i = 0; i < args.current_index; i++) {
-        // Construct the file path for each document
+        // Get URL from document's crawler file
         char filename[256];
         sprintf(filename, "%s/%d", pageDirectory, scores[i].docID);
         FILE *fp = fopen(filename, "r");
         if (fp != NULL) {
             char url[500];
+            // Read first line (URL) from crawler file
             if (fgets(url, sizeof(url), fp) != NULL) {
-                // Strip newline if present
-                url[strcspn(url, "\n")] = 0;
+                url[strcspn(url, "\n")] = 0;  // Remove trailing newline
+                // Print score, docID, and URL in formatted output
                 printf("score: %3d doc: %3d: %s\n", scores[i].score, scores[i].docID, url);
             }
             fclose(fp);
@@ -405,65 +412,81 @@ void print_results(counters_t *results, const char *pageDirectory) {
         }
     }
 
-    // Step 7: Free allocated memory
+    // Free allocated memory
     free(scores);
 }
 
 
-
 /*
- * Helper functions for counters operations
+ * Helper function for counters_iterate to count non-zero items.
+ * Increments counter when document has positive count/score.
  */
 static void count_nonzero(void *arg, const int key, const int count) {
-    int *nitems = arg;
+    int *nitems = arg;              // Cast arg to counter
     if (count > 0) {
-        (*nitems)++;
+        (*nitems)++;                // Increment if document has positive score
     }
 }
 
 
+/**
+ * Helper function for counters_iterate to fill score array.
+ * Takes document ID and count pairs and stores them in array.
+ */
 void fill_array(void *arg, const int docID, const int count) {
-    // Unpack the arguments: `arg` is expected to be a pointer to fill_array_args_t
+    // Unpack arguments structure
     fill_array_args_t *args = arg;
     doc_score_t *tracker = args->scores;
     int *current_index = &args->current_index;
     int array_size = args->array_size;
 
-    // Ensure count is positive and we are within array bounds
+    // Store docID/count pair if count > 0 and array has space
     if (count > 0 && *current_index < array_size) {
         tracker[*current_index].docID = docID;
         tracker[*current_index].score = count;
-
-        (*current_index)++;  // Increment index
+        (*current_index)++;  // Move to next array position
     } else if (*current_index >= array_size) {
         fprintf(stderr, "Error: Index out of bounds in fill_array.\n");
     }
 }
 
 
-
+/** Sets c1 to intersection with c2, keeping minimum scores. */
 static void intersect_counters(counters_t *c1, counters_t *c2) {
     if (c1 == NULL || c2 == NULL) return;
-    // For each item in c1, update its count to min(count1, count2)
-    counters_iterate(c1, c2, intersect_helper);
+
+    // Iterate over each key in c1 and adjust based on minimum counts in c2
+    counters_iterate(c1, &(struct intersect_helper_args){c2, c1}, intersect_helper);
 }
 
+
+/*
+ * Sets each doc's score to min of scores from c1,c2 or removes if not in c2.
+ */
 static void intersect_helper(void *arg, const int key, const int count) {
-    counters_t *c2 = arg;
-    int count2 = counters_get(c2, key);
-    if (count2 < count) {
-        counters_set(c2, key, count2);
+    struct intersect_helper_args *args = arg;     // Cast arg to helper struct
+    int count2 = counters_get(args->c2, key);    // Get count from c2
+
+    if (count2 > 0) {
+        // Document exists in both sets: keep minimum score
+        counters_set(args->result, key, count < count2 ? count : count2);
+    } else {
+        // Document not in c2: remove from result by setting count to 0
+        counters_set(args->result, key, 0);
     }
 }
 
+/* Merge c1 and c2, summing their counts; result ends up in c1. */
 static void union_counters(counters_t *c1, counters_t *c2) {
     if (c1 == NULL || c2 == NULL) return;
     // For each item in c2, add its count to c1
     counters_iterate(c2, c1, union_helper);
 }
 
+
+/* Helper for union_counters that adds count from c2 to corresponding count in c1. */
 static void union_helper(void *arg, const int key, const int count) {
-    counters_t *c1 = arg;
-    int count1 = counters_get(c1, key);
-    counters_set(c1, key, count1 + count);
+    counters_t *c1 = arg;               // Cast arg back to counters_t
+    int count1 = counters_get(c1, key); // Get current count (0 if not in c1)
+    counters_set(c1, key, count1 + count); // Set new combined count
 }
