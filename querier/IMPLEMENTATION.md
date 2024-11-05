@@ -1,26 +1,102 @@
-# IMPLEMENTATION.md - Querier Implementation
+# Querier Implementation
+## Author: Chikwanda Chisha   
+Date: October, 2024
 
-## Implementation Details
+### Implementation Details
+ 
+ \
+**Below is the pseudocode  each component of querier.c**
+#### 1. `main`
+- Parse and validate command-line arguments (`pageDirectory`, `indexFilename`)
+    - If arguments are invalid:
+        - Print error and exit
+    - If `pageDirectory` is not a crawler directory:
+        - Print error and exit
+- Load `index` from `indexFilename`
+    - If index load fails:
+        - Print error and exit
+- While there is input:
+    - Prompt for query (if interactive)
+    - Read query
+    - Process query
+- Clean up and exit
 
-### 1. `main`
-- Validates command-line inputs and loads the inverted index.
+#### 2. `process_query`
+- Clean and normalize input query (`clean_query`)
+    - If `clean_query` is invalid:
+        - Print error and return
+- Tokenize `clean_query` into an array of words (`tokens`)
+    - If tokens are invalid:
+        - Print error and return
+- Evaluate the tokenized query (`results`)
+    - If results exist:
+        - Print ranked results
+- Free allocated memory
 
-### 2. `process_query`
-- Cleans and validates the query.
-- Tokenizes the query by splitting on spaces.
-- Evaluates query using boolean logic and scoring rules.
+#### 3. `clean_input`
+- Allocate memory for cleaned query
+- For each character in the query:
+    - If alphabetic:
+        - Add lowercase version to `cleaned`
+    - Else if space:
+        - Add single space (avoid duplicates)
+    - Else:
+        - Print error and return `null`
+- Return cleaned query
 
-### 3. `evaluate_query`
-- Processes tokens, using counters for `and` and `or` operations.
-- Uses `counters_intersect` and `counters_union` to manage scoring.
+#### 4. `tokenize`
+- Count words in query
+- Allocate array for tokens
+- Split query on spaces:
+    - For each word:
+        - Allocate memory
+        - Copy word
+        - Add to array
+- Validate token syntax
+- Return array or `null` if error
 
-## Testing Plan
-- **Syntax validation**: Queries with syntax errors should return informative error messages.
-- **Functionality tests**: Test single-word queries, multi-word queries with `and`/`or`, edge cases.
-- **Memory testing**: Use Valgrind to confirm no memory leaks.
+#### 5. `evaluate_query`
+- Initialize result counters
+- For each token:
+    - If `or`:
+        - Start new term
+    - Else if `and` or implicit `and`:
+        - Intersect with current term
+    - Else:
+        - Get word counters from index
+        - Update current result
+- Return final scored results
 
-### Known Issues
-Any known bugs should be documented here, along with planned fixes.
+#### 6. `print_results`
+- Count non-zero scores
+- Allocate score array
+- Fill array with `docID`, `score` pairs
+- Sort array by decreasing score
+- For each result:
+    - Get URL from `pageDirectory`
+    - Print `score`, `docID`, `URL`
+- Free allocated memory
 
-*Author: Chikwanda Chisha*
-*Date: 30 October, 2024*
+### Testing Plan
+
+#### Query Syntax Tests
+- Test invalid characters
+- Test operator placement rules
+- Test blank queries
+- Test case sensitivity
+
+#### Functionality Tests
+- Single-word queries
+- Multi-word implicit `AND` queries
+- Explicit `AND`/`OR` queries
+- Complex combinations
+- Edge cases (words not in index)
+
+#### Memory Testing
+- Use Valgrind to check for leaks
+- Use Valgrind to check for invalid memory access
+- Test cleanup on error conditions
+
+
+
+
