@@ -62,7 +62,7 @@ echo "an" | ./querier $TESTDIR $INDEXFILE       # two letter word
 # Test 9: No Match Cases
 echo "No Match Cases..."
 echo "xaerhieuyhfbi" | ./querier $TESTDIR $INDEXFILE
-echo "BEHGRIOHGIrierfywry" | ./querier $TESTDIR $INDEXFILE
+echo "BEHGRIOHGIrierfy" | ./querier $TESTDIR $INDEXFILE
 
 # Test 10: Memory test
 echo "Testing for memory leaks..."
