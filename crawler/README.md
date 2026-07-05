@@ -1,8 +1,8 @@
-# CS50 Tiny Search Engine - Crawler
+# Tiny Search Engine - Crawler
 
 ## Author
 Chikwanda Chisha  
-CS50 Tiny Search Engine Project  
+Tiny Search Engine Project  
 October 2024
 
 ## Overview
@@ -15,13 +15,13 @@ To run the crawler:
 ./crawler seedURL pageDirectory maxDepth
 ```
 
-- **seedURL**: Starting URL (must be from the CS50 server).
+- **seedURL**: Starting URL (must be from the local server).
 - **pageDirectory**: Directory where pages will be saved (must exist and be writable).
 - **maxDepth**: Maximum depth to crawl (between 0 and 10).
 
 Example:
 ```bash
-./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../data 2
+./crawler http://localhost:8080/index.html ../data 2
 ```
 
 ## Project Files
@@ -43,7 +43,7 @@ make
 
 ### Basic Run
 ```bash
-./crawler http://cs50tse.cs.dartmouth.edu/tse/letters/index.html ../data 1
+./crawler http://localhost:8080/index.html ../data 1
 ```
 
 ### Memory Check with Valgrind

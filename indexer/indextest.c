@@ -13,10 +13,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../libcs50/mem.h"
-#include "../libcs50/file.h"
-#include "../libcs50/hashtable.h"
-#include "../libcs50/counters.h"
+#include "../libengine/mem.h"
+#include "../libengine/file.h"
+#include "../libengine/hashtable.h"
+#include "../libengine/counters.h"
 #include "../common/index.h"
 
 int main(int argc, char *argv[]) 

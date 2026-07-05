@@ -1,7 +1,7 @@
 /* 
  * Author: Chikwanda Chisha
  * Date: Oct 10, 2024
- * counters.c - CS50 Lab 3
+ * counters.c - Lab 3
  * 
  * This module implements a set of counters, each identified by a unique non-negative integer key.
  * The set is implemented as a linked list of nodes, each storing a key-counter pair.

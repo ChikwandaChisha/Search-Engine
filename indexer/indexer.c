@@ -19,15 +19,15 @@
 #include <dirent.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include "../libcs50/webpage.h"
-#include "../libcs50/hashtable.h"
-#include "../libcs50/counters.h"
-#include "../libcs50/bag.h"
+#include "../libengine/webpage.h"
+#include "../libengine/hashtable.h"
+#include "../libengine/counters.h"
+#include "../libengine/bag.h"
 #include "../common/pagedir.h"
-#include "../libcs50/mem.h"
+#include "../libengine/mem.h"
 #include "../common/index.h"
 #include "../common/word.h"
-#include "../libcs50/file.h"   // Added for file utilities
+#include "../libengine/file.h"   // Added for file utilities
 
 // Function declarations
 bool indexBuild(const char *pageDirectory, index_t *index);

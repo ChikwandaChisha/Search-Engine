@@ -1,4 +1,4 @@
-# Makefile for CS50 library
+# Makefile for utility library
 #   Builds and compiles all these utility functions into a library.
 #
 # David Kotz, April 2016, July 2017, April 2019, 2021
@@ -6,9 +6,11 @@
 
 # object files, and the target library
 OBJS = bag.o counters.o file.o hashtable.o hash.o mem.o set.o webpage.o
-LIB = libcs50.a
+LIB = libengine.a
 
-CFLAGS = -Wall -pedantic -std=c11 -ggdb $(FLAGS)
+# -DNOSLEEP removes the 1-second-per-fetch politeness delay in webpage_fetch.
+# Safe here because the crawler only ever fetches a local mirror on localhost.
+CFLAGS = -Wall -pedantic -std=c11 -ggdb -DNOSLEEP $(FLAGS)
 CC = gcc
 MAKE = make
 

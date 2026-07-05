@@ -1,4 +1,4 @@
-/* pagedir.c - module to handle page directory operations for CS50 TSE Crawler
+/* pagedir.c - module to handle page directory operations for TSE Crawler
  *
  * This module includes functions to:
  * 1. Initialize the page directory and mark it as a crawler directory.
@@ -13,10 +13,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <dirent.h>
-#include "../libcs50/webpage.h"
+#include "../libengine/webpage.h"
 #include "pagedir.h"
-#include "../libcs50/file.h"  // Updated to use file.h for file utilities
-#include "../libcs50/mem.h"
+#include "../libengine/file.h"  // Updated to use file.h for file utilities
+#include "../libengine/mem.h"
 
 /**************** pagedir_init ****************/
 /* Initialize the page directory.

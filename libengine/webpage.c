@@ -164,7 +164,7 @@ webpage_fetch(webpage_t* page)
     // open connection - exit on error
     http_fp = connectToHost(hostname, port);
 
-#ifndef NOSLEEP // CS50 students: please don't turn off the sleep!
+#ifndef NOSLEEP // please don't turn off the sleep!
     sleep(1);   // sleep one second between fetches, to lighten load on server
 #endif
   }
@@ -194,7 +194,8 @@ webpage_fetch(webpage_t* page)
   if (httpResponse != NULL) {
     // check response code to see whether we succeeded
     int httpResponseCode = 0;
-    if (sscanf(httpResponse, "HTTP/1.1 %d", &httpResponseCode) == 1
+    if ((sscanf(httpResponse, "HTTP/1.1 %d", &httpResponseCode) == 1 ||
+         sscanf(httpResponse, "HTTP/1.0 %d", &httpResponseCode) == 1)
         && httpResponseCode == 200) {
       // success! ignore the rest of the header, then grab the page
       // read lines until we read a blank line or fail to read a line
@@ -533,9 +534,9 @@ normalizeURL(const char* url)
 #ifdef REMOVE_SLASH
   // Remove trailing slash [DFK 2017].
   // This code allows crawler to realize that
-  //    http://www.cs.dartmouth.edu == http://www.cs.dartmouth.edu/
+  //    http://www.example.com == http://www.example.com/
   // but doing so actually prevents the crawler from following the 
-  // server's implicit redirect to http://www.cs.dartmouth.edu/index.html
+  // server's implicit redirect to http://www.example.com/index.html
   // So, I've decided not to include it.
   if (*result != '\0') {
     char* last = result + strlen(result) - 1;
@@ -894,7 +895,7 @@ connectToHost(const char* hostname, const int port)
  *
  * Should have no use outside of this file, thus declared static.
  *
- * Implementation adapted for CS50 TSE Crawler from the cURL library:
+ * Implementation adapted for TSE Crawler from the cURL library:
  *
  * Copyright (c) 1996 - 2014, Daniel Stenberg, <daniel@haxx.se>.
  *

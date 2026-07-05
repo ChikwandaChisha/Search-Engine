@@ -1,7 +1,7 @@
 /**********************************
  * querier.c - Tiny Search Engine Querier
  *
- * CS50 Lab 6 - Querier
+ * Querier
  * Processes search queries using an inverted index.
  *
  * Usage: ./querier pageDirectory indexFilename
@@ -20,7 +20,7 @@
 #include "pagedir.h"
 #include "word.h"
 #include "counters.h"
-#include "../libcs50/file.h"
+#include "../libengine/file.h"
 #include "../common/index.h"
 
 // Structure for tracking document scores

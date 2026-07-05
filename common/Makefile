@@ -4,7 +4,7 @@
 
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -pedantic -std=c11 -ggdb -I../libcs50
+CFLAGS = -Wall -pedantic -std=c11 -ggdb -I../libengine
 
 # Output library
 LIBRARY = common.a

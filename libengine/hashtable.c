@@ -1,7 +1,7 @@
 /*
  * Author: Chikwanda Chisha
  * Date: 11 October, 2024
- * hashtable.c - CS50 Lab 3
+ * hashtable.c - Lab 3
  *
  * This module implements a hashtable that stores (key, item) pairs.
  * 

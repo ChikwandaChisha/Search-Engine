@@ -10,8 +10,8 @@
 
 #include <stdio.h>
 #include <stdbool.h>
-#include "../libcs50/counters.h"
-#include "../libcs50/hashtable.h"
+#include "../libengine/counters.h"
+#include "../libengine/hashtable.h"
 
 /**
  * Index structure, representing an in-memory inverted index.

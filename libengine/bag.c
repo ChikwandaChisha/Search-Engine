@@ -1,5 +1,5 @@
 /* 
- * bag.c - CS50 'bag' module
+ * bag.c - 'bag' module
  *
  * see bag.h for more information.
  *

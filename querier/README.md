@@ -42,22 +42,22 @@ The basic command syntax for running the program is:
 
 1. **Basic Query**:
    ```bash
-   echo "computer" | ./querier ~/cs50-dev/shared/tse/output/toscrape-2 ~/cs50-dev/shared/tse/output/toscrape-2.index
+   echo "computer" | ./querier ../data/quotes ../data/quotes.index
    ```
 
 2. **AND Query**:
    ```bash
-   echo "computer AND science" | ./querier ~/cs50-dev/shared/tse/output/toscrape-2 ~/cs50-dev/shared/tse/output/toscrape-2.index
+   echo "computer AND science" | ./querier ../data/quotes ../data/quotes.index
    ```
 
 3. **OR Query**:
    ```bash
-   echo "computer OR science" | ./querier ~/cs50-dev/shared/tse/output/toscrape-2 ~/cs50-dev/shared/tse/output/toscrape-2.index
+   echo "computer OR science" | ./querier ../data/quotes ../data/quotes.index
    ```
 
 4. **Complex Query**:
    ```bash
-   echo "computer AND science OR engineering" | ./querier ~/cs50-dev/shared/tse/output/toscrape-2 ~/cs50-dev/shared/tse/output/toscrape-2.index
+   echo "computer AND science OR engineering" | ./querier ../data/quotes ../data/quotes.index
    ```
 
 ### Error Handling

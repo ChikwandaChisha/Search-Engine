@@ -1,5 +1,5 @@
-# CS50 Lab 5 (Tiny Search Engine Indexer)
-CS50 Fall 2024, Chikwanda Chisha  
+# Tiny Search Engine Indexer
+Fall 2024, Chikwanda Chisha  
 Check `IMPLEMENTATION.md` for implementation details.
 
 ## Indexer

@@ -4,10 +4,10 @@
 
 CC = gcc
 CFLAGS = -Wall -pedantic -std=c11 -ggdb
-CPPFLAGS = -I../common -I../libcs50
+CPPFLAGS = -I../common -I../libengine
 
 # Libraries
-LIBS = ../common/common.a ../common/index.o ../libcs50/libcs50.a  # Added ../common/index.o
+LIBS = ../common/common.a ../common/index.o ../libengine/libengine.a  # Added ../common/index.o
 LLIBS = -lm
 
 # Default target

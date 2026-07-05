@@ -19,3 +19,9 @@ TAGS
 data
 index_files
 querier_files
+
+# compiled binaries (Windows)
+*.exe
+
+# locally mirrored external websites (regenerate with add.sh / mirror.sh)
+sites

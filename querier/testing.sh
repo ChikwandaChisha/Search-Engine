@@ -4,8 +4,8 @@
 # Date: 30 October, 2024
 
 # Define path to test data
-TESTDIR=~/cs50-dev/shared/tse/output/toscrape-2
-INDEXFILE=~/cs50-dev/shared/tse/output/toscrape-2.index
+TESTDIR=../data/quotes
+INDEXFILE=../data/quotes.index
 
 echo "Starting querier tests..."
 

@@ -1,5 +1,5 @@
 /*
- * crawler.c - CS50 Tiny Search Engine Crawler
+ * crawler.c - Tiny Search Engine Crawler
  *
  * The Crawler starts from a seed URL and explores all reachable webpages
  * within the same domain, up to a given maximum depth. Each page is saved
@@ -73,7 +73,7 @@ void parseArgs(const int argc, char* argv[], char** seedURL, char** pageDirector
 
     // Check if the URL is internal
     if (!isInternalURL(normalized)) {
-        fprintf(stderr, "error: seedURL must be internal to CS50 server\n");
+        fprintf(stderr, "error: seedURL must be internal to the server\n");
         free(normalized);  // Free memory before exit
         exit(1);
     }

@@ -1,7 +1,7 @@
-/* crawler.h - header file for CS50 Tiny Search Engine Crawler
+/* crawler.h - header file for Tiny Search Engine Crawler
  *
  * This file contains function declarations, constants, and any necessary
- * types needed by the Crawler module for CS50 TSE. The Crawler starts
+ * types needed by the Crawler module for TSE. The Crawler starts
  * from a seed URL and explores all reachable pages up to a specified
  * depth, saving each page's content in a designated directory.
  *

@@ -157,9 +157,9 @@ char* webpage_getNextWord(webpage_t* page, int* pos);
  *
  * Known bugs:
  *   Does not work well on directory-type URLs like
- *      http://cs50tse.cs.dartmouth.edu/tse/letters
+ *      http://localhost:8080
  *   unless they include a trailing slash, like
- *      http://cs50tse.cs.dartmouth.edu/tse/letters/
+ *      http://localhost:8080/
  *
  * Usage example: (retrieve all urls in a page)
  * int pos = 0;
@@ -197,7 +197,7 @@ char* normalizeURL(const char* url);
 
 
 /***********************************************************************
- * isInternalURL - verify whether the given url is 'internal' to CS50
+ * isInternalURL - verify whether the given url is 'internal' to the server
  *
  * Caller provides:
  *   url: string containing a *normalized* absolute url
@@ -212,6 +212,6 @@ bool isInternalURL(const char* url);
 
 // All normalized URLs beginning with this prefix are considered "internal"
 static const
-char INTERNAL_PREFIX[] = "http://cs50tse.cs.dartmouth.edu/tse/";
+char INTERNAL_PREFIX[] = "http://localhost:8080/";
 
 #endif // __WEBPAGE_H

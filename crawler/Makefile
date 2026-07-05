@@ -1,14 +1,14 @@
-# Makefile for crawler program in CS50 TSE
+# Makefile for crawler program in TSE
 # Chikwanda Chisha
 # October 25, 2024
 
 
 OBJS = crawler.o
-LIBS = ../common/common.a ../libcs50/libcs50.a
+LIBS = ../common/common.a ../libengine/libengine.a
 
 # compiler options
 CFLAGS = -Wall -pedantic -std=c11 -ggdb
-INCLUDES = -I../libcs50 -I../common
+INCLUDES = -I../libengine -I../common
 CC = gcc
 MAKE = make
 
@@ -27,7 +27,7 @@ crawler: $(OBJS) $(LIBS)
 # Build the libraries
 $(LIBS):
 	$(MAKE) -C ../common
-	$(MAKE) -C ../libcs50
+	$(MAKE) -C ../libengine
 
 test: crawler testing.sh
 	bash -v testing.sh &> testing.out

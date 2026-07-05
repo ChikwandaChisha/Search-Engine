@@ -9,11 +9,11 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "../libcs50/hashtable.h"
-#include "../libcs50/counters.h"
-#include "../libcs50/mem.h"
+#include "../libengine/hashtable.h"
+#include "../libengine/counters.h"
+#include "../libengine/mem.h"
 #include "index.h"
-#include "../libcs50/file.h"
+#include "../libengine/file.h"
 
 // Forward declarations for helper functions
 static void save_count_helper(void *arg, const int docID, const int count);
